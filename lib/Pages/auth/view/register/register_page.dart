@@ -179,7 +179,7 @@ Future<void>localImagePicker()async{
                                       UserModel(
                                           userName: cubit.userName.text,
                                           userImage: "",
-                                          userEmail: cubit.email.text.toLowerCase(),
+                                          userEmail: cubit.email.text,
                                           userCart: [],
                                           userWish: [],
                                           createdAt: Timestamp.now(),

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class UserModel {
 
@@ -9,7 +8,6 @@ class UserModel {
 
 
    UserModel({
-    // required this.userId,
      required this.userName,
      required this.userImage,
      required this.userEmail,
@@ -19,24 +17,22 @@ class UserModel {
    });
 
    UserModel.fromJson(Map<String, dynamic>? json) {
-    userName = json!['name'];
-   // userId = json['email'];
-    userImage = json['phone'];
-    userEmail = json['id'];
-    userCart = json['type'];
-    userWish = json['image'];
-    createdAt = json['token'];
+    userName = json!['userName'];
+    userImage = json['userImage'];
+    userEmail = json['userEmail'];
+    userCart = json['userCart'];
+    userWish = json['userWish'];
+    createdAt = json['createdAt'];
 
   }
 
   Map<String, dynamic> toMap({required id}) => {
-   // 'userId': userId,
     'userName':userName,
     'userImage': userImage,
     'userEmail': userEmail,
-    'type': userCart,
-    'image': userWish,
-    'token': createdAt,
+    'userCart': userCart,
+    'userWish': userWish,
+    'createdAt': createdAt,
   };
 }
 

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,37 +55,40 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
 
-//  sign in with google
-  Future signInWithGoogle()async{
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-    final credential = GoogleAuthProvider.credential(
+
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+          final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    final authResults = await FirebaseAuth.instance
-        .signInWithCredential(GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    ));
-    if (authResults.additionalUserInfo!.isNewUser) {
-      log("this function is called");
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(authResults.user!.uid)
-          .set({
-        'userId': authResults.user!.uid,
-        'userName': authResults.user!.displayName,
-        'userImage': authResults.user!.photoURL,
-        'userEmail': authResults.user!.email,
-        'createdAt': Timestamp.now(),
-        'userWish': [],
-        'userCart': [],
-      });
-    }
-    emit(LoginGoogle());
-    return await FirebaseAuth.instance.signInWithCredential(credential);
 
+      final UserCredential authResult = await FirebaseAuth.instance.signInWithCredential(credential);
+      final User? user = authResult.user;
+
+      if (authResult.additionalUserInfo!.isNewUser) {
+        await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
+          'userId': user.uid,
+          'userName': user.displayName,
+          'userImage': user.photoURL,
+          'userEmail': user.email,
+          'createdAt': Timestamp.now(),
+          'userWish': [],
+          'userCart': [],
+        });
+        print("New user created");
+      }
+
+      emit(LoginGoogle());
+    } catch (e, stackTrace) {
+      print("Error during Google sign-in: $e\n$stackTrace");
+    }
   }
 
 }

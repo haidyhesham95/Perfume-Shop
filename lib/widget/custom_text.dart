@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
-  const CustomText({super.key, required this.label, this.textAlign=null, });
+  const CustomText({super.key, required this.label, this.textAlign, });
 final String label;
 final TextAlign? textAlign;
 

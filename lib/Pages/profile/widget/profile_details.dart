@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/Constant/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Constant/Colors.dart';
@@ -9,6 +10,7 @@ class CustomProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserModel? userModel;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
@@ -25,13 +27,13 @@ class CustomProfile extends StatelessWidget {
                 )),
           ),
           const SizedBox(width: 10),
-           const Column(
+            Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Haidy hesham',
+              Text('',
                 style:Styles.textStyle22,
               ),
-              CustomText(label: 'hh7234699@gmail.com'),
+              CustomText(label: '',),
 
             ],
           ),

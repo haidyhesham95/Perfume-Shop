@@ -30,9 +30,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       String uid = value.user!.uid;
 
       await FirebaseFirestore.instance.collection("users").doc(uid).set(userModel.toMap(id: uid));
-
-
-      emit(RegisterSuccess());
+     emit(RegisterSuccess());
 
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Email Created Successfully'),
